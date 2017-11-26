@@ -17,10 +17,7 @@ var Square = function () {
 }
 
 Square.prototype.canRotate = function (isValid) {
-  var d = this.dir = 1;
-  if (d == 4) {
-    d = 0;
-  }
+  var d = (this.dir = 1) % 4;
   var test = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -38,9 +35,6 @@ Square.prototype.canRotate = function (isValid) {
 Square.prototype.rotate = function (num) {
   if (!num) {num = 1;}
   this.dir = (this.dir + num) % 4;
-  if (this.dir == 4) {
-    this.dir = 0;
-  }
   for (var i = 0; i < this.data.length; i++) {
     for (var j = 0; j < this.data[0].length; j++) {
       this.data[i][j] = this.rotates[this.dir][i][j];
@@ -50,7 +44,7 @@ Square.prototype.rotate = function (num) {
 
 Square.prototype.canDown = function (isValid) {
   var test = {};
-  test.x = (this.origin.x + 1) % 4;
+  test.x = this.origin.x + 1;
   test.y = this.origin.y;
   return isValid(test, this.data);
 }
